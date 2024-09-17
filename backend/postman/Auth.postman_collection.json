@@ -21,7 +21,7 @@
 					}
 				},
 				"url": {
-					"raw": "localhost:5000/api/auth/signup",
+					"raw": "localhost:5000/api/auth/signin",
 					"host": [
 						"localhost"
 					],
@@ -29,7 +29,7 @@
 					"path": [
 						"api",
 						"auth",
-						"signup"
+						"signin"
 					]
 				}
 			},
@@ -42,7 +42,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"email\":\"shehzadaslamoza@gmail.com\",\r\n    \"password\":\"123412341234\"\r\n}",
+					"raw": "{\r\n    \"email\":\"shehzadaslamoza6@gmail.com\",\r\n    \"password\":\"123412341234\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -65,7 +65,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Dashboard",
+			"name": "App Running Check",
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -80,14 +80,59 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:7777/api/dashboard",
+					"raw": "localhost:5000",
 					"host": [
 						"localhost"
 					],
-					"port": "7777",
+					"port": "5000"
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List All Employees",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
 					"path": [
 						"api",
-						"dashboard"
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Employee",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"employee_id\":300,\r\n  \"first_name\": \"Muhammad\",\r\n  \"last_name\": \"Shehzad\",\r\n  \"email\": \"shehzadaslamoza@gmail.com\",\r\n  \"phone_number\": \"123-456-7890\",\r\n  \"hire_date\": \"2024-06-16T19:00:00.000Z\", \r\n  \"job_id\": \"IT_PROG\",\r\n  \"salary\": 60000,\r\n  \"commission_pct\": 0.1,\r\n  \"manager_id\": 101,\r\n  \"department_id\": 60\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/employees",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"employees"
 					]
 				}
 			},

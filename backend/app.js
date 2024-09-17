@@ -1,19 +1,21 @@
 const express = require("express");
 const authRoutes = require("./routes/authRoutes");
 const authMiddleware = require("./middlewares/authMiddleware");
+const employeeRoutes = require("./routes/employeeRoutes");
 const db = require("./config/db");
-
+const bodyParser = require("body-parser");
 const app = express();
 
 // Middleware
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api", employeeRoutes);
 
-// Protected Route Example
-app.use("/api/dashboard", authMiddleware, (req, res) => {
-  res.json({ message: "Welcome to the dashboard" });
+app.use("/", (req, res) => {
+  res.json({ message: "App is running!" });
 });
 
 // Start Server and DB
