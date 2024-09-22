@@ -32,7 +32,7 @@ async function getMaxID(){
 
 async function newEmployee(employeeData) {
   const {
-    // employee_id,
+    id,
     first_name,
     last_name,
     email,
@@ -44,6 +44,7 @@ async function newEmployee(employeeData) {
     // manager_id,
     // department_id,
   } = employeeData;
+
 
   // Convert ISO date string to JavaScript Date object
   const hireDate = new Date(hire_date);
@@ -60,21 +61,21 @@ async function newEmployee(employeeData) {
     //   (employee_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct, manager_id, department_id) 
     // VALUES 
     //   (:employee_id,:first_name, :last_name, :email, :phone_number, :hire_date, :job_id, :salary, :commission_pct, :manager_id, :department_id)`,
-    `INSERT INTO EMPLOYEES (employee_id, last_name, email, HIRE_DATE, JOB_ID) VALUES (1, 'Lakhani', 'SAAKHANI', '24-JUN-24', 10)`,  
-    // {
-    //     employee_id:207,
-    //     first_name:"Saad",
-    //     last_name:"Lakhani",
-    //     email:"saad@saad.com",
-    //     phone_number: "000 000 000",
-    //     hire_date: "24-JUN-24",
-    //     job_id: 10,
-    //     salary:"100000",
-    //     commission_pct: 0,
-    //     manager_id: 100,
-    //     department_id: 10,
-    //   },
-    {},{ autoCommit: true }
+    `INSERT INTO EMPLOYEES (employee_id, last_name, email, HIRE_DATE, JOB_ID) VALUES (:employee_id, 'Lakhani', 'SAAKHANI', '24-JUN-24', 10)`,  
+    {
+        employee_id: employeeData.id,
+        // first_name:"Saad",
+        // last_name:"Lakhani",
+        // email:"saad@saad.com",
+        // phone_number: "000 000 000",
+        // hire_date: "24-JUN-24",
+        // job_id: 10,
+        // salary:"100000",
+        // commission_pct: 0,
+        // manager_id: 100,
+        // department_id: 10,
+      },
+    { autoCommit: true }
     );
   } catch (err) {
     console.log(err);

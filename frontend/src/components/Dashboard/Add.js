@@ -1,12 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import Swal from 'sweetalert2';
 
 const Add = ({ employees, setEmployees, setIsAdding }) => {
+  const [id, setID] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [date, setDate] = useState('');
   const [salary, setSalary] = useState('');
+
+  useEffect(() => {
+    fetch(`http://localhost:3001/api/employeeidmax/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setID(data.data[0][0] + 1)
+      })
+      .catch((error) => console.error("Error fetching search results:", error));
+  }, []);
 
   const handleAdd = async (e) => {
     e.preventDefault();
@@ -21,6 +36,7 @@ const Add = ({ employees, setEmployees, setIsAdding }) => {
     }
 
     const newEmployee = {
+      id,
       firstName,
       lastName,
       email,
@@ -29,7 +45,7 @@ const Add = ({ employees, setEmployees, setIsAdding }) => {
     };
 
     try {
-      console.log(JSON.stringify(newEmployee))
+      // console.log(JSON.stringify(newEmployee))
       const response = await fetch('http://localhost:3001/api/employees', {
         method: 'POST',
         headers: {
