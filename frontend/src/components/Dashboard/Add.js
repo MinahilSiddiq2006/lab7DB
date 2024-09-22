@@ -5,13 +5,13 @@ const Add = ({ employees, setEmployees, setIsAdding }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
-  const [salary, setSalary] = useState('');
   const [date, setDate] = useState('');
+  const [salary, setSalary] = useState('');
 
-  const handleAdd = e => {
+  const handleAdd = async (e) => {
     e.preventDefault();
 
-    if (!firstName || !lastName || !email || !salary || !date) {
+    if (!firstName || !lastName || !email || !salary || !date ) {
       return Swal.fire({
         icon: 'error',
         title: 'Error!',
@@ -20,9 +20,7 @@ const Add = ({ employees, setEmployees, setIsAdding }) => {
       });
     }
 
-    const id = employees.length + 1;
     const newEmployee = {
-      id,
       firstName,
       lastName,
       email,
@@ -30,8 +28,25 @@ const Add = ({ employees, setEmployees, setIsAdding }) => {
       date,
     };
 
-    employees.push(newEmployee);
-    localStorage.setItem('employees_data', JSON.stringify(employees));
+    try {
+      console.log(JSON.stringify(newEmployee))
+      const response = await fetch('http://localhost:3001/api/employees', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newEmployee),
+      });
+
+      if (response.ok) {
+        const newEmployee = await response.json();
+        // onAddEmployee(newEmployee);
+      } else {
+        console.error('Failed to add employee');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
     setEmployees(employees);
     setIsAdding(false);
 
