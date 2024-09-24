@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
 import Header from "./Header";
-import Table from "./Table";
-import Add from "./Add";
 import Edit from "./Edit";
+import DepartmentTable from "./DepartmentTable";
+import AddDepartment from "./AddDepartment";
 
-const Dashboard = ({ setIsAuthenticated }) => {
-  const [employees, setEmployees] = useState("");
-  const [selectedEmployee, setSelectedEmployee] = useState(null);
+const DepartmentsDashboard = ({ setIsAuthenticated }) => {
+  const [departments, setDepartments] = useState("");
+  const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/employees/`, {
+    fetch(`http://localhost:3001/api/department/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -29,46 +29,19 @@ const Dashboard = ({ setIsAuthenticated }) => {
           return 0;
         });
 
-        setEmployees(sortedData);
+        setDepartments(sortedData);
       })
       .catch((error) => console.error("Error fetching search results:", error));
   }, []);
 
   const handleEdit = (id) => {
-    const [employee] = employees.filter((employee) => employee.id === id);
+    const [department] = departments.filter((department) => department.id === id);
 
-    setSelectedEmployee(employee);
+    setSelectedDepartment(department);
     setIsEditing(true);
   };
 
-  const handleDelete = (id) => {
-    Swal.fire({
-      icon: "warning",
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      showCancelButton: true,
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, cancel!",
-    }).then((result) => {
-      if (result.value) {
-        const [employee] = employees.filter((employee) => employee.id === id);
 
-        Swal.fire({
-          icon: "success",
-          title: "Deleted!",
-          text: `${employee.firstName} ${employee.lastName}'s data has been deleted.`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-
-        const employeesCopy = employees.filter(
-          (employee) => employee.id !== id
-        );
-        localStorage.setItem("employees_data", JSON.stringify(employeesCopy));
-        setEmployees(employeesCopy);
-      }
-    });
-  };
 
   return (
     <div>
@@ -86,7 +59,7 @@ const Dashboard = ({ setIsAuthenticated }) => {
                 marginBottom: "18px",
               }}
             >
-              <h3 style={{ marginRight: "36px" }}>Employee View</h3>
+              <h3 style={{ marginRight: "36px" }}>Department View</h3>
               <div
                 style={{
                   display: "flex",
@@ -103,29 +76,28 @@ const Dashboard = ({ setIsAuthenticated }) => {
                     borderRadius: "12px",
                   }}
                 >
-                  Add Employee
+                  Add Department
                 </button>
               </div>
             </div>
-            <Table
-              employees={employees}
+            <DepartmentTable
+              departments={departments}
               handleEdit={handleEdit}
-              handleDelete={handleDelete}
             />
           </>
         )}
         {isAdding && (
-          <Add
-            employees={employees}
-            setEmployees={setEmployees}
+          <AddDepartment
+            departments={departments}
+            setEmployees={setDepartments}
             setIsAdding={setIsAdding}
           />
         )}
         {isEditing && (
           <Edit
-            departments={employees}
-            selectedDepartment={selectedEmployee}
-            setEmployees={setEmployees}
+            departments={departments}
+            selectedDepartment={selectedDepartment}
+            setEmployees={setDepartments}
             setIsEditing={setIsEditing}
           />
         )}
@@ -134,4 +106,4 @@ const Dashboard = ({ setIsAuthenticated }) => {
   );
 };
 
-export default Dashboard;
+export default DepartmentsDashboard;

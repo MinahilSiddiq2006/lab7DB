@@ -32,7 +32,7 @@ const Logout = ({ setIsAuthenticated }) => {
       className="muted-button"
       onClick={handleLogout}
     >
-      <i className="fas fa-sign-out-alt" style={{ fontSize: '24px' }}></i>
+      <i className="fas fa-sign-out-alt" style={{ fontSize: '24px', color:"#343a40" }}></i>
     </button>
   );
 };
