@@ -4,7 +4,7 @@ async function listAllJobs() {
   let conn;
   try {
     conn = await oracledb.getConnection();
-    const result = await conn.execute(`SELECT * FROM jobs`);
+    const result = await conn.execute(`SELECT JOB_ID, JOB_TITLE FROM jobs`);
     return result.rows;
   } catch (err) {
     throw err;

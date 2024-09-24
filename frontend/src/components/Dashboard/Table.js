@@ -13,17 +13,28 @@ const Table = ({ employees, handleEdit, handleDelete }) => {
     minimumFractionDigits: null,
   });
 
+  const formatDate = (datetime) => {
+    const date = new Date(datetime);
+    return date.toLocaleDateString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: '2-digit'
+    }).replace(/ /g, '-');
+  };
+
   return (
     <div className="contain-table">
       <table className="striped-table">
         <thead>
           <tr>
-            <th>No.</th>
+            <th>ID</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
             <th>Phone Number</th>
             <th>Salary</th>
+            <th>Hire Date</th>
+            <th>Job ID</th>
             <th colSpan={2} className="text-center">
               Actions
             </th>
@@ -39,6 +50,8 @@ const Table = ({ employees, handleEdit, handleDelete }) => {
                 <td>{employee[3]}</td>
                 <td>{employee[4]} </td>
                 <td>{formatter.format(employee[7])}</td>
+                <td>{formatDate(employee[5])}</td>
+                <td>{employee[6]}</td>
                 <td className="text-right">
                   <button
                     onClick={() => handleEdit(employee.id)}
