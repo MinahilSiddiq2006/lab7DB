@@ -28,11 +28,11 @@ const Logout = ({ setIsAuthenticated }) => {
 
   return (
     <button
-      style={{ marginLeft: '12px' }}
+      style={{display: 'flex', border: 0}}
       className="muted-button"
       onClick={handleLogout}
     >
-      Logout
+      <i className="fas fa-sign-out-alt" style={{ fontSize: '24px' }}></i>
     </button>
   );
 };
