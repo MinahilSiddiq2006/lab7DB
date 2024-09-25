@@ -31,48 +31,31 @@ async function getMaxID() {
 }
 
 async function newEmployee(employeeData) {
-  const {
-    id,
-    first_name,
-    last_name,
-    email,
-    // phone_number,
-    salary,
-    hire_date,
-    // job_id,
-    // commission_pct,
-    // manager_id,
-    // department_id,
-  } = employeeData;
-
   // Convert ISO date string to JavaScript Date object
-  const hireDate = new Date(hire_date);
+  const hireDate = new Date(employeeData.hire_date);
+  const email = employeeData.email.substring(
+    0,
+    employeeData.email.indexOf("@")
+  );
 
   let conn;
   try {
     conn = await oracledb.getConnection();
+    console.log(employeeData);
     await conn.execute(
-      // `INSERT INTO employees
-      //       (employee_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct, manager_id, department_id)
-      //     VALUES
-      //       (:employee_id,:first_name, :last_name, :email, :phone_number, :hire_date, :job_id, :salary, :commission_pct, :manager_id, :department_id)`,
-      //   `INSERT INTO employees
-      //   (employee_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct, manager_id, department_id)
-      // VALUES
-      //   (:employee_id,:first_name, :last_name, :email, :phone_number, :hire_date, :job_id, :salary, :commission_pct, :manager_id, :department_id)`,
-      `INSERT INTO EMPLOYEES (employee_id, last_name, email, HIRE_DATE, JOB_ID) VALUES (:employee_id, 'Lakhani', 'SAAKHANI', '24-JUN-24', 10)`,
+      `INSERT INTO EMPLOYEES (employee_id, first_Name, last_name, email, phone_number, HIRE_DATE, JOB_ID, salary, manager_id, department_id) VALUES (:employee_id, :first_name, :last_name, :email, :phone_number, :hire_date , :job_id, :salary, 100, 90)`,
       {
         employee_id: employeeData.id,
-        // first_name:"Saad",
-        // last_name:"Lakhani",
-        // email:"saad@saad.com",
-        // phone_number: "000 000 000",
-        // hire_date: "24-JUN-24",
-        // job_id: 10,
-        // salary:"100000",
+        first_name: employeeData.firstName,
+        last_name: employeeData.lastName,
+        email: email,
+        phone_number: employeeData.phone,
+        hire_date: hireDate,
+        job_id: employeeData.jobID,
+        salary: employeeData.salary,
         // commission_pct: 0,
         // manager_id: 100,
-        // department_id: 10,
+        // department_id: 90,
       },
       { autoCommit: true }
     );
@@ -135,6 +118,7 @@ async function updateEmployee(id, updatedData) {
     }
   }
 }
+
 
 // deleteEmployee
 async function deleteEmployee(id) {

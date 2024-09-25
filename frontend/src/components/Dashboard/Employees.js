@@ -6,8 +6,6 @@ import Table from "./Table";
 import Add from "./Add";
 import Edit from "./Edit";
 
-import { employeesData } from "../../data";
-
 const Dashboard = ({ setIsAuthenticated }) => {
   const [employees, setEmployees] = useState("");
   const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -73,35 +71,65 @@ const Dashboard = ({ setIsAuthenticated }) => {
   };
 
   return (
-    <div className="container">
-      {!isAdding && !isEditing && (
-        <>
-          <Header
-            setIsAdding={setIsAdding}
-            setIsAuthenticated={setIsAuthenticated}
-          />
-          <Table
+    <div>
+      <Header
+        setIsAdding={setIsAdding}
+        setIsAuthenticated={setIsAuthenticated}
+      />
+      <div className="container">
+        {!isAdding && !isEditing && (
+          <>
+            <div
+              style={{
+                display: "flex",
+                marginTop: "30px",
+                marginBottom: "18px",
+              }}
+            >
+              <h3 style={{ marginRight: "36px" }}>Employee View</h3>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <button
+                  onClick={() => setIsAdding(true)}
+                  style={{
+                    color: "#404040",
+                    border: "3px solid #404040",
+                    backgroundColor: "transparent",
+                    borderRadius: "12px",
+                  }}
+                >
+                  Add Employee
+                </button>
+              </div>
+            </div>
+            <Table
+              employees={employees}
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+            />
+          </>
+        )}
+        {isAdding && (
+          <Add
             employees={employees}
-            handleEdit={handleEdit}
-            handleDelete={handleDelete}
+            setEmployees={setEmployees}
+            setIsAdding={setIsAdding}
           />
-        </>
-      )}
-      {isAdding && (
-        <Add
-          employees={employees}
-          setEmployees={setEmployees}
-          setIsAdding={setIsAdding}
-        />
-      )}
-      {isEditing && (
-        <Edit
-          employees={employees}
-          selectedEmployee={selectedEmployee}
-          setEmployees={setEmployees}
-          setIsEditing={setIsEditing}
-        />
-      )}
+        )}
+        {isEditing && (
+          <Edit
+            departments={employees}
+            selectedDepartment={selectedEmployee}
+            setEmployees={setEmployees}
+            setIsEditing={setIsEditing}
+          />
+        )}
+      </div>
     </div>
   );
 };

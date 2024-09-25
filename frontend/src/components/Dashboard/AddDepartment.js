@@ -1,7 +1,7 @@
 import React, { useState , useEffect } from 'react';
 import Swal from 'sweetalert2';
 
-const Add = ({setIsAdding }) => {
+const AddDepartment = ({setIsAdding }) => {
   const [id, setID] = useState('');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -27,7 +27,7 @@ const Add = ({setIsAdding }) => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/employeeidmax/`, {
+    fetch(`http://localhost:3001/api/departmentidmax/`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -37,7 +37,7 @@ const Add = ({setIsAdding }) => {
       .then((data) => {
         setID(data.data[0][0] + 1)
       })
-      .catch((error) => console.error("Error fetching Employees", error));
+      .catch((error) => console.error("Error fetching departments", error));
   }, []);
 
   const handleAdd = async (e) => {
@@ -52,7 +52,7 @@ const Add = ({setIsAdding }) => {
       });
     }
 
-    const newEmployee = {
+    const newdepartment = {
       id,
       firstName,
       lastName,
@@ -64,18 +64,18 @@ const Add = ({setIsAdding }) => {
     };
 
     try {
-      // console.log(JSON.stringify(newEmployee))
-      const response = await fetch('http://localhost:3001/api/employees', {
+      // console.log(JSON.stringify(newdepartment))
+      const response = await fetch('http://localhost:3001/api/departments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(newEmployee),
+        body: JSON.stringify(newdepartment),
       });
 
       if (response.ok) {
         await response.json();
-        // onAddEmployee(newEmployee);
+        // onAdddepartment(newdepartment);
         window.location.reload();
         Swal.fire({
           icon: 'success',
@@ -85,7 +85,7 @@ const Add = ({setIsAdding }) => {
           timer: 1500,
         });
       } else {
-        console.error('Failed to add employee');
+        console.error('Failed to add department');
         Swal.fire({
           icon: 'error',
           title: 'Something went wrong',
@@ -103,7 +103,7 @@ const Add = ({setIsAdding }) => {
   return (
     <div className="small-container">
       <form onSubmit={handleAdd}>
-        <h1>Add Employee</h1>
+        <h1>Add Department</h1>
         <label htmlFor="firstName">First Name</label>
         <input
           id="firstName"
@@ -181,4 +181,4 @@ const Add = ({setIsAdding }) => {
   );
 };
 
-export default Add;
+export default AddDepartment;
