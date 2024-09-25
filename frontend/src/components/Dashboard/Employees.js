@@ -41,7 +41,8 @@ const Dashboard = ({ setIsAuthenticated }) => {
     setIsEditing(true);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
+    console.log(id);
     Swal.fire({
       icon: "warning",
       title: "Are you sure?",
@@ -49,24 +50,37 @@ const Dashboard = ({ setIsAuthenticated }) => {
       showCancelButton: true,
       confirmButtonText: "Yes, delete it!",
       cancelButtonText: "No, cancel!",
-    }).then((result) => {
+    }).then( async (result) => {
       if (result.value) {
-        const [employee] = employees.filter((employee) => employee.id === id);
-
-        Swal.fire({
-          icon: "success",
-          title: "Deleted!",
-          text: `${employee.firstName} ${employee.lastName}'s data has been deleted.`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-
-        const employeesCopy = employees.filter(
-          (employee) => employee.id !== id
-        );
-        localStorage.setItem("employees_data", JSON.stringify(employeesCopy));
-        setEmployees(employeesCopy);
-      }
+    
+        // Make a DELETE request to the backend API to delete the employee
+        try {
+            const response = await fetch(`http://localhost:3001/api/employees/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+    
+            if (response.ok) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Employee deleted successfully',
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed to delete employee',
+                });
+            }
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'An error occurred',
+                text: error.message,
+            });
+        }
+    }
     });
   };
 

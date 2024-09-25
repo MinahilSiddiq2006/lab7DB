@@ -31,12 +31,6 @@ async function departmentByID(departmentID) {
 }
 
 async function newDepartment(departmentData) {
-
-  // Error handling if data is missing with a message
-  if (!department_id || !department_name ||!location_id) {
-    throw new Error("Missing required data");
-  }
-
   let conn;
   try {
     conn = await oracledb.getConnection();
