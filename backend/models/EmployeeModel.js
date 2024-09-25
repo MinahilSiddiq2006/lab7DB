@@ -15,9 +15,9 @@ async function listAllEmployees() {
   }
 }
 
-async function getMaxID(){
+async function getMaxID() {
   let conn;
-  try{
+  try {
     conn = await oracledb.getConnection();
     const result = await conn.execute(`SELECT MAX(EMPLOYEE_ID) FROM EMPLOYEES`);
     return result.rows;
@@ -45,7 +45,6 @@ async function newEmployee(employeeData) {
     // department_id,
   } = employeeData;
 
-
   // Convert ISO date string to JavaScript Date object
   const hireDate = new Date(hire_date);
 
@@ -53,16 +52,16 @@ async function newEmployee(employeeData) {
   try {
     conn = await oracledb.getConnection();
     await conn.execute(
-      // `INSERT INTO employees 
-      //       (employee_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct, manager_id, department_id) 
-      //     VALUES 
+      // `INSERT INTO employees
+      //       (employee_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct, manager_id, department_id)
+      //     VALUES
       //       (:employee_id,:first_name, :last_name, :email, :phone_number, :hire_date, :job_id, :salary, :commission_pct, :manager_id, :department_id)`,
-    //   `INSERT INTO employees 
-    //   (employee_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct, manager_id, department_id) 
-    // VALUES 
-    //   (:employee_id,:first_name, :last_name, :email, :phone_number, :hire_date, :job_id, :salary, :commission_pct, :manager_id, :department_id)`,
-    `INSERT INTO EMPLOYEES (employee_id, last_name, email, HIRE_DATE, JOB_ID) VALUES (:employee_id, 'Lakhani', 'SAAKHANI', '24-JUN-24', 10)`,  
-    {
+      //   `INSERT INTO employees
+      //   (employee_id, first_name, last_name, email, phone_number, hire_date, job_id, salary, commission_pct, manager_id, department_id)
+      // VALUES
+      //   (:employee_id,:first_name, :last_name, :email, :phone_number, :hire_date, :job_id, :salary, :commission_pct, :manager_id, :department_id)`,
+      `INSERT INTO EMPLOYEES (employee_id, last_name, email, HIRE_DATE, JOB_ID) VALUES (:employee_id, 'Lakhani', 'SAAKHANI', '24-JUN-24', 10)`,
+      {
         employee_id: employeeData.id,
         // first_name:"Saad",
         // last_name:"Lakhani",
@@ -75,7 +74,7 @@ async function newEmployee(employeeData) {
         // manager_id: 100,
         // department_id: 10,
       },
-    { autoCommit: true }
+      { autoCommit: true }
     );
   } catch (err) {
     console.log(err);
@@ -88,11 +87,82 @@ async function newEmployee(employeeData) {
 }
 
 // updateEmployee
+async function updateEmployee(id, updatedData) {
+  let conn;
+  try {
+    conn = await oracledb.getConnection();
+
+    let fieldsToUpdate = [];
+    let values = { employee_id: id };
+
+    if (updatedData.first_name) {
+      fieldsToUpdate.push("first_name = :first_name");
+      values.first_name = updatedData.first_name;
+    }
+    if (updatedData.last_name) {
+      fieldsToUpdate.push("last_name = :last_name");
+      values.last_name = updatedData.last_name;
+    }
+    if (updatedData.email) {
+      fieldsToUpdate.push("email = :email");
+      values.email = updatedData.email;
+    }
+    if (updatedData.salary) {
+      fieldsToUpdate.push("salary = :salary");
+      values.salary = updatedData.salary;
+    }
+    if (updatedData.hire_date) {
+      fieldsToUpdate.push("hire_date = :hire_date");
+      values.hire_date = new Date(updatedData.hire_date);
+    }
+
+    // If no fields to update, return
+    if (fieldsToUpdate.length === 0) {
+      throw new Error("No fields provided to update");
+    }
+
+    const sql = `UPDATE employees SET ${fieldsToUpdate.join(
+      ", "
+    )} WHERE employee_id = :employee_id`;
+
+    const result = await conn.execute(sql, values, { autoCommit: true });
+    return result;
+  } catch (err) {
+    throw err;
+  } finally {
+    if (conn) {
+      await conn.close();
+    }
+  }
+}
 
 // deleteEmployee
+async function deleteEmployee(id) {
+  let conn;
+  try {
+    conn = await oracledb.getConnection();
+
+    // Execute the DELETE query
+    const result = await conn.execute(
+      `DELETE FROM employees WHERE employee_id = :employee_id`,
+      { employee_id: id },
+      { autoCommit: true }
+    );
+
+    return result;
+  } catch (err) {
+    throw err;
+  } finally {
+    if (conn) {
+      await conn.close();
+    }
+  }
+}
 
 module.exports = {
   listAllEmployees,
   getMaxID,
   newEmployee,
+  updateEmployee,
+  deleteEmployee,
 };
