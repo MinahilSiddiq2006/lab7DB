@@ -2,6 +2,8 @@ const {
   listAllEmployees,
   newEmployee,
   getMaxID,
+  updateEmployeeByID,
+  deleteEmployeeByID,
 } = require("../models/EmployeeModel");
 const db = require("../config/db");
 

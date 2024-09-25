@@ -70,7 +70,7 @@ async function newEmployee(employeeData) {
 }
 
 // updateEmployee
-async function updateEmployee(id, updatedData) {
+async function updateEmployeeByID(id, updatedData) {
   let conn;
   try {
     conn = await oracledb.getConnection();
@@ -119,9 +119,8 @@ async function updateEmployee(id, updatedData) {
   }
 }
 
-
 // deleteEmployee
-async function deleteEmployee(id) {
+async function deleteEmployeeByID(id) {
   let conn;
   try {
     conn = await oracledb.getConnection();
@@ -135,6 +134,7 @@ async function deleteEmployee(id) {
 
     return result;
   } catch (err) {
+    console.log(err);
     throw err;
   } finally {
     if (conn) {
@@ -147,6 +147,6 @@ module.exports = {
   listAllEmployees,
   getMaxID,
   newEmployee,
-  updateEmployee,
-  deleteEmployee,
+  updateEmployeeByID,
+  deleteEmployeeByID,
 };
