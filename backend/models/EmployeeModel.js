@@ -70,21 +70,22 @@ async function newEmployee(employeeData) {
 }
 
 // updateEmployee
-async function updateEmployeeByID(id, updatedData) {
+async function updateEmployeeByID(updatedData) {
+  console.log(updatedData)
   let conn;
   try {
     conn = await oracledb.getConnection();
 
     let fieldsToUpdate = [];
-    let values = { employee_id: id };
+    let values = { employee_id: updatedData.id};
 
-    if (updatedData.first_name) {
+    if (updatedData.firstName) {
       fieldsToUpdate.push("first_name = :first_name");
-      values.first_name = updatedData.first_name;
+      values.first_name = updatedData.firstName;
     }
-    if (updatedData.last_name) {
+    if (updatedData.lastName) {
       fieldsToUpdate.push("last_name = :last_name");
-      values.last_name = updatedData.last_name;
+      values.last_name = updatedData.lastName;
     }
     if (updatedData.email) {
       fieldsToUpdate.push("email = :email");
@@ -93,10 +94,6 @@ async function updateEmployeeByID(id, updatedData) {
     if (updatedData.salary) {
       fieldsToUpdate.push("salary = :salary");
       values.salary = updatedData.salary;
-    }
-    if (updatedData.hire_date) {
-      fieldsToUpdate.push("hire_date = :hire_date");
-      values.hire_date = new Date(updatedData.hire_date);
     }
 
     // If no fields to update, return

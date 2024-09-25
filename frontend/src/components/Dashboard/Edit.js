@@ -2,59 +2,65 @@ import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
 const Edit = ({ employees, selectedEmployee, setEmployees, setIsEditing }) => {
-  const id = selectedEmployee.id;
+  const id = selectedEmployee[0];
 
-  const [firstName, setFirstName] = useState(selectedEmployee.firstName);
-  const [lastName, setLastName] = useState(selectedEmployee.lastName);
-  const [email, setEmail] = useState(selectedEmployee.email);
-  const [salary, setSalary] = useState(selectedEmployee.salary);
-  const [date, setDate] = useState(selectedEmployee.date);
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: null,
+  });
 
-  const handleUpdate = e => {
-    e.preventDefault();
+  const [firstName, setFirstName] = useState(selectedEmployee[1]);
+  const [lastName, setLastName] = useState(selectedEmployee[2]);
+  const [email, setEmail] = useState(selectedEmployee[3]);
+  const [salary, setSalary] = useState(selectedEmployee[7]);
+  
 
-    if (!firstName || !lastName || !email || !salary || !date) {
-      return Swal.fire({
-        icon: 'error',
-        title: 'Error!',
-        text: 'All fields are required.',
-        showConfirmButton: true,
-      });
-    }
-
-    const employee = {
+  const handleUpdate = async () => {
+    const updatedEmployee = {
       id,
       firstName,
       lastName,
       email,
-      salary,
-      date,
+      salary
     };
 
-    for (let i = 0; i < employees.length; i++) {
-      if (employees[i].id === id) {
-        employees.splice(i, 1, employee);
-        break;
+    try {
+      const response = await fetch(`http://localhost:3001/api/employees/`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedEmployee),
+      });
+
+      if (response.ok) {
+        await response.json();
+        setIsEditing(false);
+        Swal.fire({
+          icon: "success",
+          title: "Employee updated successfully",
+        });
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Failed to update employee",
+        });
       }
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "An error occurred",
+        text: error.message,
+      });
     }
-
-    localStorage.setItem('employees_data', JSON.stringify(employees));
-    setEmployees(employees);
-    setIsEditing(false);
-
-    Swal.fire({
-      icon: 'success',
-      title: 'Updated!',
-      text: `${employee.firstName} ${employee.lastName}'s data has been updated.`,
-      showConfirmButton: false,
-      timer: 1500,
-    });
   };
 
   return (
     <div className="small-container">
       <form onSubmit={handleUpdate}>
         <h1>Edit Employee</h1>
+        <label htmlFor="id">Employee ID: {id}</label>
         <label htmlFor="firstName">First Name</label>
         <input
           id="firstName"
@@ -74,7 +80,7 @@ const Edit = ({ employees, selectedEmployee, setEmployees, setIsEditing }) => {
         <label htmlFor="email">Email</label>
         <input
           id="email"
-          type="email"
+          type="text"
           name="email"
           value={email}
           onChange={e => setEmail(e.target.value)}
@@ -87,14 +93,7 @@ const Edit = ({ employees, selectedEmployee, setEmployees, setIsEditing }) => {
           value={salary}
           onChange={e => setSalary(e.target.value)}
         />
-        <label htmlFor="date">Date</label>
-        <input
-          id="date"
-          type="date"
-          name="date"
-          value={date}
-          onChange={e => setDate(e.target.value)}
-        />
+
         <div style={{ marginTop: '30px' }}>
           <input type="submit" value="Update" />
           <input

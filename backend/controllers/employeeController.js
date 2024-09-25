@@ -37,10 +37,10 @@ async function addEmployee(req, res) {
 // updateEmployee
 async function updateEmployee(req, res) {
   try {
-    const employeeID = req.params.id;
     const updatedData = req.body;
+    console.log(updatedData)
 
-    const result = await updateEmployeeByID(employeeID, updatedData);
+    const result = await updateEmployeeByID(updatedData);
 
     if (result.rowsAffected > 0) {
       res.json({ message: "Employee updated successfully" });

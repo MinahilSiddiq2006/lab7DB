@@ -34,10 +34,8 @@ const Dashboard = ({ setIsAuthenticated }) => {
       .catch((error) => console.error("Error fetching search results:", error));
   }, []);
 
-  const handleEdit = (id) => {
-    const [employee] = employees.filter((employee) => employee.id === id);
-
-    setSelectedEmployee(employee);
+  const handleEdit = (employee) => {
+    setSelectedEmployee(employee)
     setIsEditing(true);
   };
 
@@ -137,9 +135,7 @@ const Dashboard = ({ setIsAuthenticated }) => {
         )}
         {isEditing && (
           <Edit
-            departments={employees}
-            selectedDepartment={selectedEmployee}
-            setEmployees={setEmployees}
+            selectedEmployee={selectedEmployee}
             setIsEditing={setIsEditing}
           />
         )}
