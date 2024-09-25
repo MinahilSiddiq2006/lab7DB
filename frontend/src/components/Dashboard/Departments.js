@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
 import Header from "./Header";
-import Edit from "./Edit";
+import DepartmentEdit from "./DepartmentEdit";
 import DepartmentTable from "./DepartmentTable";
 import AddDepartment from "./AddDepartment";
 
@@ -21,7 +21,7 @@ const DepartmentsDashboard = ({ setIsAuthenticated }) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.data);
+        // console.log(data.data);
         // Assuming data.data is an array of arrays and you want to sort by the first item of each sub-array
         const sortedData = data.data.sort((a, b) => {
           if (a[0] < b[0]) return -1;
@@ -35,10 +35,20 @@ const DepartmentsDashboard = ({ setIsAuthenticated }) => {
   }, []);
 
   const handleEdit = (id) => {
-    const [department] = departments.filter((department) => department.id === id);
-
-    setSelectedDepartment(department);
-    setIsEditing(true);
+      fetch(`http://localhost:3001/api/department/${id}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.data[0]);
+  
+          setSelectedDepartment(data.data[0]);
+          setIsEditing(true);
+        })
+        .catch((error) => console.error("Error fetching search results:", error));
   };
 
 
@@ -89,15 +99,15 @@ const DepartmentsDashboard = ({ setIsAuthenticated }) => {
         {isAdding && (
           <AddDepartment
             departments={departments}
-            setEmployees={setDepartments}
+            setDepartments={setDepartments}
             setIsAdding={setIsAdding}
           />
         )}
         {isEditing && (
-          <Edit
+          <DepartmentEdit
             departments={departments}
             selectedDepartment={selectedDepartment}
-            setEmployees={setDepartments}
+            setDepartments={setDepartments}
             setIsEditing={setIsEditing}
           />
         )}

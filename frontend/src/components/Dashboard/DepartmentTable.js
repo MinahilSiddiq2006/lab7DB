@@ -9,6 +9,7 @@ const DepartmentTable = ({ departments, handleEdit, handleDelete }) => {
           <tr>
             <th>Department ID</th>
             <th>Department Name</th>
+            <th>Location ID</th>
             <th>
               Actions
             </th>
@@ -20,9 +21,10 @@ const DepartmentTable = ({ departments, handleEdit, handleDelete }) => {
               <tr key={department[0]}>
                 <td>{department[0]}</td>
                 <td>{department[1]}</td>
+                <td>{department[3]}</td>
                 <td>
                 <button
-                    onClick={() => handleEdit(department.id)}
+                    onClick={() => handleEdit(department[0])}
                     className="button muted-button"
                   >
                     Edit

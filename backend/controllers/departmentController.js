@@ -2,6 +2,8 @@ const {
   listAllDepartments,
   newDepartment,
   modifyDepartment,
+  departmentByID,
+  getMaxID,
 } = require("../models/DepartmentModel");
 const db = require("../config/db");
 
@@ -9,6 +11,25 @@ async function getAllDepartments(req, res) {
   try {
     const employees = await listAllDepartments();
     res.json({ data: employees });
+  } catch (err) {
+    res.status(500).json({ message: "Error fetching departments", error: err });
+  }
+}
+
+async function getIDMax(req, res){
+  try {
+    const department = await getMaxID();
+    res.json({data:department});
+  } catch (err) {
+    res.status(500).json({message: "Error fetching the max ID", error: err})
+  } 
+}
+
+async function getDepartmentByID(req, res) {
+  try {
+    const id = req.params.id;
+    const employee = await departmentByID(id);
+    res.json({ data: employee });
   } catch (err) {
     res.status(500).json({ message: "Error fetching departments", error: err });
   }
@@ -32,4 +53,4 @@ async function updateDepartment(req, res) {
   }
 }
 
-module.exports = { getAllDepartments, addDepartment, updateDepartment };
+module.exports = { getAllDepartments, addDepartment, updateDepartment, getDepartmentByID, getIDMax };
