@@ -128,7 +128,7 @@ async function deleteEmployeeByID(id) {
       { employee_id: id }
     );
 
-    const managerId = getManagerResult.rows[0]?.MANAGER_ID;
+    const managerId = getManagerResult.rows[0][0];
 
     if (managerId !== undefined) {
       // Update the manager_id of employees reporting to the employee being deleted
