@@ -141,9 +141,20 @@ async function deleteEmployeeByID(id) {
           old_manager_id: id,
         }
       );
+
+      // Update the manager_id in the departments where the employee is a manager
+      await conn.execute(
+        `UPDATE departments
+         SET manager_id = :new_manager_id
+         WHERE manager_id = :old_manager_id`,
+        {
+          new_manager_id: managerId,
+          old_manager_id: id,
+        }
+      );
     }
 
-    // Deleting the employee
+    // Delete the employee
     const deleteResult = await conn.execute(
       "DELETE FROM employees WHERE employee_id = :employee_id",
       { employee_id: id },
