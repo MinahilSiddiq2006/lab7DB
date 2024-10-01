@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
 const DepartmentEdit = ({
-  departments,
   selectedDepartment,
   setDepartments,
   setIsEditing,
@@ -28,43 +27,8 @@ const DepartmentEdit = ({
   }, []);
 
   const handleUpdate = async () => {
-    const updatedDepartment = {
-      id,
-      location,
-      name,
-    };
-
-    try {
-      const response = await fetch("http://localhost:3001/api/department/", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedDepartment),
-      });
-
-      if (response.ok) {
-        const updatedDepartments = await response.json();
-        setDepartments(updatedDepartments);
-        setIsEditing(false);
-        Swal.fire({
-          icon: "success",
-          title: "Department updated successfully",
-        });
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Failed to update department",
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "An error occurred",
-        text: error.message,
-      });
-    }
-  };
+    //LAB TASK OPTIONAL: Add logic to update departments here
+  }
 
   return (
     <div className="small-container">

@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import Header from "./Header";
 import DepartmentEdit from "./DepartmentEdit";
 import DepartmentTable from "./DepartmentTable";
-import AddDepartment from "./AddDepartment";
+import AddDepartment from "./DepartmentAdd";
 
 const DepartmentsDashboard = ({ setIsAuthenticated }) => {
   const [departments, setDepartments] = useState("");
@@ -13,45 +13,12 @@ const DepartmentsDashboard = ({ setIsAuthenticated }) => {
   const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/department/`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        // console.log(data.data);
-        // Assuming data.data is an array of arrays and you want to sort by the first item of each sub-array
-        const sortedData = data.data.sort((a, b) => {
-          if (a[0] < b[0]) return -1;
-          if (a[0] > b[0]) return 1;
-          return 0;
-        });
-
-        setDepartments(sortedData);
-      })
-      .catch((error) => console.error("Error fetching search results:", error));
+    //LAB TASK: Add logic to fetch departments here.
   }, []);
 
   const handleEdit = (id) => {
-      fetch(`http://localhost:3001/api/department/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log(data.data[0]);
-  
-          setSelectedDepartment(data.data[0]);
-          setIsEditing(true);
-        })
-        .catch((error) => console.error("Error fetching search results:", error));
+    //LAB TASK OPTIONAL: Add logic to update departments here
   };
-
-
 
   return (
     <div>

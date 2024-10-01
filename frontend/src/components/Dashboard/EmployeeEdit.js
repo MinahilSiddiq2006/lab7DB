@@ -1,14 +1,8 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 
-const Edit = ({ employees, selectedEmployee, setEmployees, setIsEditing }) => {
+const Edit = ({ selectedEmployee, setIsEditing }) => {
   const id = selectedEmployee[0];
-
-  const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: null,
-  });
 
   const [firstName, setFirstName] = useState(selectedEmployee[1]);
   const [lastName, setLastName] = useState(selectedEmployee[2]);

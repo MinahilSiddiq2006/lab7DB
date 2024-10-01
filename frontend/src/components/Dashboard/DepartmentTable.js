@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DepartmentTable = ({ departments, handleEdit, handleDelete }) => {
+const DepartmentTable = ({ departments, handleEdit}) => {
 
   return (
     <div className="contain-table">

@@ -6,7 +6,7 @@ import EmployeeDashboard from "../Dashboard/Employees";
 import DepartmentsDashboard from "../Dashboard/Departments";
 
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   useEffect(() => {
     setIsAuthenticated(JSON.parse(localStorage.getItem("is_authenticated")));
@@ -14,7 +14,7 @@ const App = () => {
 
   return (
     <>
-      {isAuthenticated ? (
+      {/* {isAuthenticated ? ( */}
         <BrowserRouter>
           <Routes>
           <Route path="/crud-app" element={<Navigate to="/employees" />} />
@@ -33,9 +33,9 @@ const App = () => {
             />
           </Routes>
         </BrowserRouter>
-      ) : (
+      {/* ) : (
         <Login setIsAuthenticated={setIsAuthenticated} />
-      )}
+      )} */}
     </>
   );
 };

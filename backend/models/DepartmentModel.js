@@ -1,18 +1,20 @@
 const oracledb = require("oracledb");
 
 async function listAllDepartments() {
-  let conn;
-  try {
-    conn = await oracledb.getConnection();
-    const result = await conn.execute(`SELECT * FROM departments`);
-    return result.rows;
-  } catch (err) {
-    throw err;
-  } finally {
-    if (conn) {
-      await conn.close();
-    }
-  }
+  //LAB TASK: Finish Implementation
+  
+  // let conn;
+  // try {
+  //   conn = await oracledb.getConnection();
+  //   const result = await conn.execute(`SELECT * FROM departments`);
+  //   return result.rows;
+  // } catch (err) {
+  //   throw err;
+  // } finally {
+  //   if (conn) {
+  //     await conn.close();
+  //   }
+  // }
 }
 
 async function departmentByID(departmentID) {

@@ -8,12 +8,14 @@ const {
 const db = require("../config/db");
 
 async function getAllDepartments(req, res) {
-  try {
-    const employees = await listAllDepartments();
-    res.json({ data: employees });
-  } catch (err) {
-    res.status(500).json({ message: "Error fetching departments", error: err });
-  }
+//LAB TASK: Finish implementation
+
+  // try {
+  //   const employees = await listAllDepartments();
+  //   res.json({ data: employees });
+  // } catch (err) {
+  //   res.status(500).json({ message: "Error fetching departments", error: err });
+  // }
 }
 
 async function getIDMax(req, res){

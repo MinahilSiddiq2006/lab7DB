@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Swal from "sweetalert2";
 
 const DepartmentAdd = ({
   setIsAdding 
@@ -35,45 +34,11 @@ const DepartmentAdd = ({
       .then((data) => {
         setID(data.data[0][0] + 10)
       })
-      .catch((error) => console.error("Error fetching Employees", error));
+      .catch((error) => console.error("Error fetching", error));
   }, []);
 
   const handleAdd = async () => {
-    const newDepartment = {
-      id,
-      location,
-      name,
-    };
-
-    try {
-      const response = await fetch("http://localhost:3001/api/department/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newDepartment),
-      });
-
-      if (response.ok) {
-        await response.json();
-        setIsAdding(false);
-        Swal.fire({
-          icon: "success",
-          title: "Department added successfully",
-        });
-      } else {
-        Swal.fire({
-          icon: "error",
-          title: "Failed to add department",
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "An error occurred",
-        text: error.message,
-      });
-    }
+    //LAB TASK OPTIONAL: Add logic to add departments here
   };
 
   return (

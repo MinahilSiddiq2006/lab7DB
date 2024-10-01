@@ -1,8 +1,7 @@
 import React from 'react';
-import Logout from '../Logout'
 import { Link } from 'react-router-dom';
 
-const Header = ({ setIsAdding, setIsAuthenticated }) => {
+const Header = () => {
   return (
     <header style={{ backgroundColor: 'lightblue', padding: '20px 60px', borderBottomLeftRadius: "16px", borderBottomRightRadius: "16px"}}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -16,7 +15,7 @@ const Header = ({ setIsAdding, setIsAuthenticated }) => {
           <Link to="/departments">
             <button style={{ marginRight: '10px', border: 'none', background: 'none', color: '#343a40', fontSize: '16px', cursor: 'pointer' }}>Departments</button>
           </Link>
-          <Logout setIsAuthenticated={setIsAuthenticated} />
+          {/* <Logout setIsAuthenticated={setIsAuthenticated} /> */}
         </div>
       </div>
     </header>
