@@ -71,13 +71,13 @@ async function newEmployee(employeeData) {
 
 // updateEmployee
 async function updateEmployeeByID(updatedData) {
-  console.log(updatedData)
+  console.log(updatedData);
   let conn;
   try {
     conn = await oracledb.getConnection();
 
     let fieldsToUpdate = [];
-    let values = { employee_id: updatedData.id};
+    let values = { employee_id: updatedData.id };
 
     if (updatedData.firstName) {
       fieldsToUpdate.push("first_name = :first_name");
@@ -122,14 +122,35 @@ async function deleteEmployeeByID(id) {
   try {
     conn = await oracledb.getConnection();
 
-    // Execute the DELETE query
-    const result = await conn.execute(
-      `DELETE FROM employees WHERE employee_id = :employee_id`,
+    // Get the manager_id of the employee being deleted
+    const getManagerResult = await conn.execute(
+      `SELECT manager_id FROM employees WHERE employee_id = :employee_id`,
+      { employee_id: id }
+    );
+
+    const managerId = getManagerResult.rows[0]?.MANAGER_ID;
+
+    if (managerId !== undefined) {
+      // Update the manager_id of employees reporting to the employee being deleted
+      await conn.execute(
+        `UPDATE employees 
+         SET manager_id = :new_manager_id 
+         WHERE manager_id = :old_manager_id`,
+        {
+          new_manager_id: managerId,
+          old_manager_id: id,
+        }
+      );
+    }
+
+    // Deleting the employee
+    const deleteResult = await conn.execute(
+      "DELETE FROM employees WHERE employee_id = :employee_id",
       { employee_id: id },
       { autoCommit: true }
     );
 
-    return result;
+    return deleteResult;
   } catch (err) {
     console.log(err);
     throw err;
