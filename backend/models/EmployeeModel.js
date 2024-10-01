@@ -139,7 +139,8 @@ async function deleteEmployeeByID(id) {
         {
           new_manager_id: managerId,
           old_manager_id: id,
-        }
+        },
+        { autoCommit: true }
       );
 
       // Update the manager_id in the departments where the employee is a manager
@@ -150,7 +151,8 @@ async function deleteEmployeeByID(id) {
         {
           new_manager_id: managerId,
           old_manager_id: id,
-        }
+        },
+        { autoCommit: true }
       );
     }
 
