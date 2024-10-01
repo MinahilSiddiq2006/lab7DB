@@ -155,6 +155,12 @@ async function deleteEmployeeByID(id) {
         { autoCommit: true }
       );
     }
+    //deleting employee from job history
+    await conn.execute(
+      "DELETE FROM JOB_HISTORY WHERE EMPLOYEE_ID= :employee_id",
+      { employee_id: id },
+      { autoCommit: true }
+    );
 
     // Delete the employee
     const deleteResult = await conn.execute(
@@ -173,7 +179,6 @@ async function deleteEmployeeByID(id) {
     }
   }
 }
-
 module.exports = {
   listAllEmployees,
   getMaxID,
