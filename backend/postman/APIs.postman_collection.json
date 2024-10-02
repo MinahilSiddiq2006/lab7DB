@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "fb7888f0-9c30-4b93-bb67-7067e5d30bbc",
+		"_postman_id": "1b27e766-075d-45f1-bb9a-0090ba93c99c",
 		"name": "APIs",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "11507061"
@@ -22,11 +22,11 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:5000",
+					"raw": "localhost:3001",
 					"host": [
 						"localhost"
 					],
-					"port": "5000"
+					"port": "3001"
 				}
 			},
 			"response": []
@@ -58,7 +58,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n   \"employee_id\":300,\r\n  \"first_name\": \"Muhammad\",\r\n  \"last_name\": \"Shehzad\",\r\n  \"email\": \"shehzadaslamoza@gmail.com\",\r\n  \"phone_number\": \"123-456-7890\",\r\n  \"hire_date\": \"2024-06-16T19:00:00.000Z\", \r\n  \"job_id\": \"IT_PROG\",\r\n  \"salary\": 60000,\r\n  \"commission_pct\": 0.1,\r\n  \"manager_id\": 101,\r\n  \"department_id\": 60\r\n}\r\n",
+					"raw": "{\r\n   \"id\":800,\r\n  \"firstName\": \"Muhammad\",\r\n  \"lastName\": \"Shehzad\",\r\n  \"email\": \"shehzadaslamoza123@gmail.com\",\r\n  \"phone\": \"123-456-7890\",\r\n  \"hireDate\": \"2024-06-16T19:00:00.000Z\", \r\n  \"jobID\": \"IT_PROG\",\r\n  \"salary\": 60000,\r\n  \"commission_pct\": 0.1,\r\n  \"manager_id\": 101,\r\n  \"department_id\": 60\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -66,12 +66,12 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:5000/api/employees",
+					"raw": "http://localhost:3001/api/employees",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
-					"port": "5000",
+					"port": "3001",
 					"path": [
 						"api",
 						"employees"
@@ -87,7 +87,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"first_name\": \"Muhammad\",\r\n  \"last_name\": \"Aslam\",\r\n  \"email\": \"shehzadaslamoza@gmail.com\",\r\n  \"phone_number\": \"123-456-7890\",\r\n  \"hire_date\": \"2024-06-16T19:00:00.000Z\", \r\n  \"job_id\": \"IT_PROG\",\r\n  \"salary\": 60000,\r\n  \"commission_pct\": 0.1,\r\n  \"manager_id\": 101,\r\n  \"department_id\": 60\r\n}",
+					"raw": "{\r\n   \"id\":600,\r\n  \"firstName\": \"123123\",\r\n  \"lastName\": \"123\",\r\n  \"email\": \"shehzagmail.com\",\r\n  \"phone\": \"123-456-7890\",\r\n  \"hireDate\": \"2024-06-16T19:00:00.000Z\", \r\n  \"jobID\": \"IT_PROG\",\r\n  \"salary\": 60000,\r\n  \"commission_pct\": 0.1,\r\n  \"manager_id\": 101,\r\n  \"department_id\": 60\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -95,7 +95,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:3001/api/employees/300",
+					"raw": "http://localhost:3001/api/employees/",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -104,7 +104,7 @@
 					"path": [
 						"api",
 						"employees",
-						"300"
+						""
 					]
 				}
 			},

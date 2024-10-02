@@ -1,3 +1,6 @@
+/**
+ * Controller for employee-related operations
+ */
 const {
   listAllEmployees,
   newEmployee,
@@ -7,15 +10,28 @@ const {
 } = require("../models/EmployeeModel");
 const db = require("../config/db");
 
+/**
+ * Get all employees
+ * @param req - Request object
+ * @param res - Response object
+ */
 async function getAllEmployees(req, res) {
   try {
+    // get all employees
     const employees = await listAllEmployees();
+
+    // send response with employees in json
     res.json({ data: employees });
   } catch (err) {
     res.status(500).json({ message: "Error fetching employees", error: err });
   }
 }
 
+/**
+ * Get the maximum employee ID
+ * @param req - Request object
+ * @param res - Response object
+ */
 async function getIDMax(req, res) {
   try {
     const employees = await getMaxID();
@@ -25,6 +41,11 @@ async function getIDMax(req, res) {
   }
 }
 
+/**
+ * Add a new employee
+ * @param req - Request object
+ * @param res - Response object
+ */
 async function addEmployee(req, res) {
   try {
     await newEmployee(req.body);
@@ -34,11 +55,15 @@ async function addEmployee(req, res) {
   }
 }
 
-// updateEmployee
+/**
+ * Update an employee
+ * @param req - Request object
+ * @param res - Response object
+ */
 async function updateEmployee(req, res) {
   try {
     const updatedData = req.body;
-    console.log(updatedData)
+    console.log(updatedData);
 
     const result = await updateEmployeeByID(updatedData);
 
@@ -51,7 +76,12 @@ async function updateEmployee(req, res) {
     res.status(500).json({ message: "Error updating employee", error: err });
   }
 }
-// deleteEmployee
+
+/**
+ * Delete an employee
+ * @param req - Request object
+ * @param res - Response object
+ */
 async function deleteEmployee(req, res) {
   try {
     const employeeID = req.params.id; // Employee ID from the URL parameter

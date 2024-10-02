@@ -11,18 +11,22 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const app = express();
 
-// Middleware
+// Middleware to enable CORS
 app.use(cors());
+
+// Middleware to parse JSON bodies
 app.use(express.json());
+
+// Middleware to parse URL-encoded bodies
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
-app.use("/api/auth", authRoutes);
-app.use("/api", employeeRoutes);
 app.use("/api", jobRoutes);
+app.use("/api", employeeRoutes);
 app.use("/api", departmentRoutes);
 app.use("/api", locationRoutes);
 
+// Catch-all route to verify that the app is running
 app.use("/", (req, res) => {
   res.json({ message: "App is running!" });
 });
