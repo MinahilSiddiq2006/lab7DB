@@ -13,6 +13,28 @@ const Dashboard = () => {
   const [isEditing, setIsEditing] = useState(false);
 
   //LAB DEMO: Add call to fetch employees here:
+  useEffect(() => {
+    fetch(`http://localhost:3001/api/employees/`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.data);
+        // Assuming data.data is an array of arrays and you want to sort by the first item of each sub-array
+        const sortedData = data.data.sort((a, b) => {
+          if (a[0] < b[0]) return -1;
+          if (a[0] > b[0]) return 1;
+          return 0;
+        });
+
+        setEmployees(sortedData);
+      })
+      .catch((error) => console.error("Error fetching search results:", error));
+  }, []);
+
 
   const handleEdit = (employee) => {
     setSelectedEmployee(employee);
